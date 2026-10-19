@@ -1,0 +1,75 @@
+name: Build iOS IPA (unsigned)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Show Xcode and iOS SDK versions
+        run: |
+          xcodebuild -version
+          xcodebuild -showsdks
+
+      - name: Archive for iPhone and iPad without signing
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project TaikoIOS.xcodeproj \
+            -scheme TaikoIOS \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/TaikoIOS.xcarchive" \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            archive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            DEVELOPMENT_TEAM=""
+
+      - name: Verify device archive and package unsigned IPA
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="$RUNNER_TEMP/TaikoIOS.xcarchive/Products/Applications/TaikoIOS.app"
+          test -d "$app"
+          test -x "$app/TaikoIOS"
+          plutil -lint "$app/Info.plist"
+          platform=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleSupportedPlatforms:0' "$app/Info.plist")
+          test "$platform" = iPhoneOS
+          xcrun lipo -verify_arch arm64 "$app/TaikoIOS"
+          mkdir -p "$RUNNER_TEMP/ipa/Payload" "$GITHUB_WORKSPACE/build"
+          ditto "$app" "$RUNNER_TEMP/ipa/Payload/TaikoIOS.app"
+          cd "$RUNNER_TEMP/ipa"
+          /usr/bin/zip -qry "$GITHUB_WORKSPACE/build/TaikoIOS-unsigned.ipa" Payload
+          /usr/bin/unzip -t "$GITHUB_WORKSPACE/build/TaikoIOS-unsigned.ipa"
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaikoIOS-unsigned-ipa
+          path: build/TaikoIOS-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Explain installation requirements
+        shell: bash
+        run: |
+          echo '### TaikoIOS unsigned IPA' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Download TaikoIOS-unsigned-ipa from the workflow artifacts and unzip it to get the IPA.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This IPA is unsigned. Sign it with a suitable certificate and provisioning profile before installing it on an iPhone or iPad. It is not ready for TestFlight or App Store submission.' >> "$GITHUB_STEP_SUMMARY"
