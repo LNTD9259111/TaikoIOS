@@ -6,11 +6,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A00000000000000000000020 = {isa = PBXBuildFile; fileRef = A00000000000000000000021; };
 		A00000000000000000000001 /* TaikoIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000003 /* TaikoIOSApp.swift */; };
 		A00000000000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000004 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A00000000000000000000021 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* TaikoIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaikoIOSApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A00000000000000000000005 /* TaikoIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaikoIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,7 +30,7 @@
 		};
 		A00000000000000000000008 /* TaikoIOS */ = {
 			isa = PBXGroup;
-			children = (A00000000000000000000003 /* TaikoIOSApp.swift */, A00000000000000000000004 /* ContentView.swift */);
+			children = (A00000000000000000000021, A00000000000000000000003 /* TaikoIOSApp.swift */, A00000000000000000000004 /* ContentView.swift */);
 			path = TaikoIOS;
 			sourceTree = "<group>";
 		};
@@ -84,7 +86,7 @@
 		A00000000000000000000011 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (A00000000000000000000001 /* TaikoIOSApp.swift in Sources */, A00000000000000000000002 /* ContentView.swift in Sources */);
+			files = (A00000000000000000000020, A00000000000000000000001 /* TaikoIOSApp.swift in Sources */, A00000000000000000000002 /* ContentView.swift in Sources */);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
@@ -124,7 +126,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = TaikoIOS;
 				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
@@ -148,7 +150,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = TaikoIOS;
 				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;

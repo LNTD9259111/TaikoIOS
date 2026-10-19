@@ -25,6 +25,13 @@ jobs:
           xcodebuild -version
           xcodebuild -showsdks
 
+      - name: Test calculator arithmetic and input behavior
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcrun swiftc TaikoIOS/Calculator.swift Tests/CalculatorChecks.swift -o "$RUNNER_TEMP/calculator-checks"
+          "$RUNNER_TEMP/calculator-checks"
+
       - name: Archive for iPhone and iPad without signing
         shell: bash
         run: |

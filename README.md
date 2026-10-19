@@ -1,6 +1,6 @@
 # TaikoIOS
 
-App SwiftUI mẫu dành cho iPhone/iPad, iOS 16 trở lên. Hiện app chỉ có màn hình chào; chưa có chức năng sản phẩm.
+Máy tính SwiftUI dành cho iPhone/iPad, iOS 16 trở lên. Hỗ trợ cộng, trừ, nhân, chia, số thập phân, đổi dấu, phần trăm (chia cho 100), AC và nhấn dấu bằng lặp lại. Phép tính nối tiếp thực hiện từ trái sang phải; chia cho 0 hiển thị “Lỗi”.
 
 ## Build và tải IPA bằng GitHub Actions
 
@@ -20,4 +20,4 @@ Workflow dùng runner `macos-15` và Xcode mặc định của runner. GitHub c�
 - Bundle identifier mẫu: `com.example.TaikoIOS`; đổi sang identifier riêng trước khi cấu hình phân phối chính thức.
 - Trên Linux/Codex, có thể chỉnh sửa mã và workflow. Build, chạy app và xác minh bằng iOS Simulator cần macOS/Xcode.
 
-Không có phụ thuộc bên thứ ba hoặc bài kiểm thử tự động ở phiên bản mẫu này. Workflow xác minh archive dành cho thiết bị, kiến trúc arm64 và cấu trúc ZIP của IPA; các bước này không thay thế kiểm thử giao diện trên thiết bị.
+Không có phụ thuộc bên thứ ba. Workflow chạy 17 ca kiểm thử logic máy tính trước khi build. Workflow xác minh archive dành cho thiết bị, kiến trúc arm64 và cấu trúc ZIP của IPA; các bước này không thay thế kiểm thử giao diện trên thiết bị.
