@@ -53,7 +53,7 @@ jobs:
           plutil -lint "$app/Info.plist"
           platform=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleSupportedPlatforms:0' "$app/Info.plist")
           test "$platform" = iPhoneOS
-          xcrun lipo -verify_arch arm64 "$app/TaikoIOS"
+          xcrun lipo "$app/TaikoIOS" -verify_arch arm64
           mkdir -p "$RUNNER_TEMP/ipa/Payload" "$GITHUB_WORKSPACE/build"
           ditto "$app" "$RUNNER_TEMP/ipa/Payload/TaikoIOS.app"
           cd "$RUNNER_TEMP/ipa"
