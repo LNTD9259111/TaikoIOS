@@ -2,6 +2,16 @@
 
 Máy tính SwiftUI dành cho iPhone/iPad, iOS 16 trở lên. Hỗ trợ cộng, trừ, nhân, chia, số thập phân, đổi dấu, phần trăm (chia cho 100), AC và nhấn dấu bằng lặp lại. Phép tính nối tiếp thực hiện từ trái sang phải; chia cho 0 hiển thị “Lỗi”.
 
+## Xem thử trên máy tính
+
+![Bản xem thử máy tính TaikoIOS trên trình duyệt](docs/preview.png)
+
+1. Mở [docs/preview.html](docs/preview.html) trên GitHub, bấm **Download raw file** ở góc phải phía trên nội dung file.
+2. Lưu dưới tên `preview.html`, rồi nhấp đúp để mở bằng Chrome, Edge hoặc Safari. Nếu trình duyệt hiện mã HTML, dùng **Save As** để lưu file rồi mở bản đã tải.
+3. Bấm phím trên giao diện hoặc dùng bàn phím: `Enter` để tính, `Esc` để xóa.
+
+File chạy offline, không cần cài công cụ hoặc đăng nhập. Đây là bản mô phỏng trên trình duyệt; app SwiftUI thật cần iPhone/iPad hoặc iOS Simulator trên Mac. Bản web không tự đồng bộ khi sửa giao diện SwiftUI.
+
 ## Build và tải IPA bằng GitHub Actions
 
 1. Đẩy dự án lên nhánh `main` của GitHub.

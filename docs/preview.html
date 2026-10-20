@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TaikoIOS · Máy tính</title>
+<style>
+:root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#101114;color:#fafafa}*{box-sizing:border-box}body{margin:0;min-height:100vh}main{max-width:1060px;min-height:100vh;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:60px;padding:48px 32px}.intro{max-width:430px}.brand{font-size:13px;letter-spacing:3px;color:#ffad49;font-weight:700}.intro h1{font-size:clamp(38px,5vw,64px);line-height:1.08;letter-spacing:-2px;margin:24px 0}.intro p{color:#a7a9af;font-size:17px;line-height:1.7}.tag{display:inline-block;border:1px solid #393b40;border-radius:24px;padding:8px 14px;color:#d6d8dd;font-size:12px;margin-top:16px}kbd{font:inherit;color:#e8e9ed}.phone{width:360px;flex-shrink:0;background:#000;border:6px solid #34353a;border-radius:46px;padding:20px 18px 15px;box-shadow:0 25px 80px #0008}.status{display:flex;justify-content:space-between;font-size:13px;padding:0 10px;align-items:center}.island{width:92px;height:24px;background:#171717;border-radius:20px}.title{font-size:16px;color:#888;margin:30px 0 0;font-weight:600}.display{height:156px;display:flex;align-items:flex-end;justify-content:flex-end;padding-bottom:18px;overflow:hidden}.display output{font-size:68px;font-weight:300;letter-spacing:-2px;white-space:nowrap;max-width:100%;font-variant-numeric:tabular-nums}.keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}button{font:500 29px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;border:0;border-radius:99px;min-width:0;height:65px;background:#303030;color:white;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:hover{filter:brightness(1.25)}button:active{transform:scale(.95)}button:focus-visible{outline:3px solid #fff;outline-offset:3px}button.function{background:#b3b3b3;color:#000}button.operator{background:#ff9500}button.zero{grid-column:span 2}.home{height:5px;width:112px;border-radius:9px;background:#eee;margin:24px auto 0}.caption{color:#777b85;font-size:12px;text-align:center;margin:18px 0 0}.hint{font-size:13px!important;margin-top:22px!important}@media(max-width:760px){main{flex-direction:column;gap:28px;padding:30px 16px}.intro{max-width:420px;text-align:center}.intro h1{font-size:38px;margin:16px 0}.intro p{font-size:15px}.tag{margin-top:4px}.hint{margin:12px 0 0!important}.phone{width:min(360px,calc(100vw - 32px))}.display{height:130px}button{height:clamp(48px,17vw,65px)}}
+</style>
+</head>
+<body>
+<main>
+<section class="intro">
+<div class="brand">TAIKOIOS</div>
+<h1>Tính nhanh.<br>Thật đơn giản.</h1>
+<p>Cộng, trừ, nhân, chia. Một chiếc máy tính gọn gàng, luôn sẵn sàng cho những phép tính mỗi ngày.</p>
+<span class="tag">Bản xem thử trên trình duyệt</span>
+<p class="hint">Bấm các phím bên cạnh hoặc dùng bàn phím.<br><kbd>Enter</kbd> để tính · <kbd>Esc</kbd> để xóa tất cả.</p>
+<p class="hint">Đây là bản mô phỏng giao diện và thao tác của app. Để dùng ứng dụng iOS, hãy ký và cài file IPA trên iPhone.</p>
+</section>
+<section aria-label="Máy tính TaikoIOS">
+<div class="phone">
+<div class="status" aria-hidden="true"><span>9:41</span><span class="island"></span><span>▰</span></div>
+<div class="title">Máy tính</div>
+<div class="display"><output id="display" aria-live="polite" aria-label="Kết quả">0</output></div>
+<div class="keys">
+<button class="function" data-key="AC" aria-label="Xóa tất cả">AC</button>
+<button class="function" data-key="±" aria-label="Đổi dấu">±</button>
+<button class="function" data-key="%" aria-label="Phần trăm">%</button>
+<button class="operator" data-key="÷" aria-label="Chia">÷</button>
+<button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button>
+<button class="operator" data-key="×" aria-label="Nhân">×</button>
+<button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button>
+<button class="operator" data-key="−" aria-label="Trừ">−</button>
+<button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button>
+<button class="operator" data-key="+" aria-label="Cộng">+</button>
+<button class="zero" data-key="0">0</button><button data-key="." aria-label="Dấu thập phân">.</button>
+<button class="operator" data-key="=" aria-label="Bằng">=</button>
+</div><div class="home" aria-hidden="true"></div>
+</div>
+<p class="caption">iPhone / iPad · TaikoIOS</p>
+</section>
+</main>
+<script>
+'use strict';
+class Calculator {
+  constructor() { this.clear(); }
+  clear() { this.display='0'; this.stored=null; this.operation=null; this.lastOperation=null; this.lastOperand=null; this.startsNewNumber=true; }
+  show(value) { this.display=value===0?'0':Number(value.toPrecision(12)).toString(); }
+  calculate(lhs, op, rhs) {
+    const result=op==='+'?lhs+rhs:op==='−'?lhs-rhs:op==='×'?lhs*rhs:rhs===0?NaN:lhs/rhs;
+    if (!Number.isFinite(result)) { this.clear(); this.display='Lỗi'; return false; }
+    this.show(result); return true;
+  }
+  press(key) {
+    const value=Number(this.display);
+    if (key==='AC') { this.clear(); return; }
+    if (key==='±'||key==='%') {
+      if (!Number.isFinite(value)) return;
+      this.show(key==='±'?-value:value/100); this.startsNewNumber=false;
+      this.lastOperation=null; this.lastOperand=null; return;
+    }
+    if (['+','−','×','÷'].includes(key)) {
+      if (!Number.isFinite(value)) return;
+      if (this.stored!==null && this.operation!==null && !this.startsNewNumber && !this.calculate(this.stored,this.operation,value)) return;
+      this.stored=Number(this.display); this.operation=key; this.lastOperation=null; this.lastOperand=null; this.startsNewNumber=true; return;
+    }
+    if (key==='=') {
+      if (!Number.isFinite(value)) return;
+      if (this.stored!==null && this.operation!==null) {
+        if (!this.calculate(this.stored,this.operation,value)) return;
+        this.lastOperation=this.operation; this.lastOperand=value;
+      } else if (this.lastOperation!==null && !this.calculate(value,this.lastOperation,this.lastOperand)) return;
+      this.stored=null; this.operation=null; this.startsNewNumber=true; return;
+    }
+    if (!/^[0-9.]$/.test(key)) return;
+    if (this.startsNewNumber) { this.display='0'; this.startsNewNumber=false; }
+    this.lastOperation=null; this.lastOperand=null;
+    if (key==='.') { if (!this.display.includes('.')) this.display+='.'; }
+    else if (this.display==='0') this.display=key;
+    else if (this.display.replace(/\D/g,'').length<12) this.display+=key;
+  }
+}
+const calculator=new Calculator();
+const display=document.querySelector('#display');
+function press(key) {
+  calculator.press(key); display.textContent=calculator.display;
+  display.style.fontSize=Math.min(68,440/Math.max(calculator.display.length,1))+'px';
+}
+document.querySelectorAll('[data-key]').forEach(button=>button.addEventListener('click',()=>press(button.dataset.key)));
+document.addEventListener('keydown',event=>{
+  if (event.ctrlKey||event.metaKey||event.altKey) return;
+  if (event.key==='Enter' && event.target instanceof HTMLButtonElement) return;
+  const mapped={'Enter':'=','Escape':'AC','Delete':'AC','*':'×','/':'÷','-':'−',',':'.'};
+  const key=mapped[event.key]||event.key;
+  if (/^[0-9.]$/.test(key)||['AC','+','−','×','÷','=','%'].includes(key)) { event.preventDefault(); press(key); }
+});
+</script>
+</body>
+</html>
